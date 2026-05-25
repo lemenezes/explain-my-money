@@ -34,9 +34,23 @@ const mockInsights = [
 ];
 
 function App() {
+  // Estado para simulação do cenário
+  const [showSimulation, setShowSimulation] = useState(false);
+  const [simResult, setSimResult] = useState("");
+  function handleSimulate() {
+    setShowSimulation(false);
+    // Exemplo de lógica mock: delivery reduzido 30%, economia em 5 anos
+    setTimeout(() => {
+      setSimResult(
+        "Se você reduzir gastos com delivery em 30%, pode economizar R$ 18.000 em 5 anos."
+      );
+      setShowSimulation(true);
+    }, 350); // pequeno delay para animação
+  }
   const [csvUploaded, setCsvUploaded] = useState(false);
   const [analyzing, setAnalyzing] = useState(false);
   const [analysisStep, setAnalysisStep] = useState(0);
+  const [showUpload, setShowUpload] = useState(true);
 
   const analysisSteps = [
     "Analyzing subscriptions...",
@@ -49,26 +63,26 @@ function App() {
   const analysisTimeout = useRef<number | null>(null);
 
   function handleCsvUpload() {
-    setCsvUploaded(true);
-    setAnalyzing(true);
-    setAnalysisStep(0);
+    setShowUpload(false); // inicia animação de saída do card
+    setTimeout(() => {
+      setCsvUploaded(true);
+      setAnalyzing(true);
+      setAnalysisStep(0);
 
-    let step = 0;
-
-    function nextStep() {
-      if (step < analysisSteps.length - 1) {
-        step++;
-        setAnalysisStep(step);
-
-        analysisTimeout.current = window.setTimeout(nextStep, 1200);
-      } else {
-        window.setTimeout(() => {
-          setAnalyzing(false);
-        }, 1200);
+      let step = 0;
+      function nextStep() {
+        if (step < analysisSteps.length - 1) {
+          step++;
+          setAnalysisStep(step);
+          analysisTimeout.current = window.setTimeout(nextStep, 1200);
+        } else {
+          window.setTimeout(() => {
+            setAnalyzing(false);
+          }, 1200);
+        }
       }
-    }
-
-    analysisTimeout.current = window.setTimeout(nextStep, 1200);
+      analysisTimeout.current = window.setTimeout(nextStep, 1200);
+    }, 500); // delay para animação do card sumir
   }
 
   return (
@@ -132,31 +146,30 @@ function App() {
       {/* UPLOAD */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7 }}
-        className="w-full max-w-xl mb-12">
+        animate={showUpload ? { opacity: 1, y: 0 } : { opacity: 0, y: -40 }}
+        transition={{ duration: 0.6 }}
+        className="w-full max-w-xl mb-12"
+        style={{
+          pointerEvents: showUpload ? "auto" : "none",
+          display: showUpload ? "block" : "none"
+        }}>
         <div className="relative bg-zinc-900/80 border border-zinc-800 rounded-2xl shadow-2xl shadow-black/30 px-10 py-12 flex flex-col items-center gap-6 overflow-hidden">
           <div
             aria-hidden
             className="pointer-events-none absolute inset-0 rounded-2xl border-2 border-transparent [box-shadow:0_0_32px_0_rgba(16,185,129,0.18)]"
           />
-
           <Upload className="w-12 h-12 text-emerald-400" />
-
           <h2 className="text-2xl md:text-3xl font-bold text-zinc-100">
             Importe seu extrato
           </h2>
-
           <p className="text-zinc-400 text-center max-w-md">
             Faça upload do seu CSV para começar a entender seu dinheiro com IA.
           </p>
-
           <label className="cursor-pointer group">
             <span className="flex items-center gap-2 px-7 py-3 rounded-xl bg-gradient-to-r from-emerald-400 to-cyan-400 text-zinc-900 font-semibold transition-all duration-200 group-hover:scale-105">
               <FileText className="w-5 h-5" />
               Selecionar CSV
             </span>
-
             <input
               type="file"
               accept=".csv"
@@ -244,14 +257,27 @@ function App() {
 
             <div className="bg-zinc-900/80 border border-zinc-800 rounded-2xl p-6">
               <Brain className="w-6 h-6 text-emerald-300 mb-3" />
-
               <h3 className="text-lg font-semibold mb-4">
                 Simulador de Cenários
               </h3>
-
-              <button className="mt-2 bg-gradient-to-r from-emerald-400 to-cyan-400 hover:opacity-90 transition-opacity px-5 py-2 rounded-xl text-zinc-900 font-semibold">
+              <button
+                className="mt-2 bg-gradient-to-r from-emerald-400 to-cyan-400 hover:opacity-90 transition-opacity px-5 py-2 rounded-xl text-zinc-900 font-semibold"
+                onClick={handleSimulate}>
                 Simular futuro
               </button>
+              <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                animate={
+                  showSimulation ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }
+                }
+                transition={{ duration: 0.5 }}
+                className="mt-6">
+                {showSimulation && (
+                  <div className="bg-gradient-to-r from-emerald-900/30 to-cyan-900/20 border border-emerald-700/30 rounded-xl px-5 py-4 text-emerald-200 shadow-lg shadow-emerald-400/10 text-base font-medium max-w-xs">
+                    {simResult}
+                  </div>
+                )}
+              </motion.div>
             </div>
           </motion.section>
 
