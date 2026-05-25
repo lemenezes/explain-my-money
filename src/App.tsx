@@ -34,6 +34,14 @@ const mockInsights = [
 ];
 
 function App() {
+  // Reset premium
+  function handleResetAnalysis() {
+    setCsvUploaded(false);
+    setAnalyzing(false);
+    setAnalysisStep(0);
+    setShowUpload(true);
+    setShowSimulation(false);
+  }
   // Estado para simulação do cenário
   const [showSimulation, setShowSimulation] = useState(false);
   const [simResult, setSimResult] = useState("");
@@ -203,6 +211,18 @@ function App() {
       {/* DASHBOARD */}
       {csvUploaded && !analyzing && (
         <>
+          {/* Botão premium para reiniciar análise */}
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="w-full max-w-5xl flex justify-end mb-2">
+            <button
+              onClick={handleResetAnalysis}
+              className="px-5 py-2 rounded-xl bg-gradient-to-r from-zinc-800 via-zinc-900 to-zinc-800 border border-zinc-700 text-emerald-300 font-semibold text-sm shadow shadow-emerald-400/10 hover:border-emerald-400/30 hover:text-cyan-300 transition-all duration-200">
+              Analisar outro extrato (CSV)
+            </button>
+          </motion.div>
           {/* INSIGHTS */}
           <motion.section
             initial={{ opacity: 0, y: 30 }}
