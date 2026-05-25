@@ -34,6 +34,7 @@ const mockInsights = [
 ];
 
 function App() {
+  const [showUpload, setShowUpload] = useState(true);
   // Reset premium
   function handleResetAnalysis() {
     setCsvUploaded(false);
@@ -58,7 +59,6 @@ function App() {
   const [csvUploaded, setCsvUploaded] = useState(false);
   const [analyzing, setAnalyzing] = useState(false);
   const [analysisStep, setAnalysisStep] = useState(0);
-  const [showUpload, setShowUpload] = useState(true);
 
   const analysisSteps = [
     "Analyzing subscriptions...",
@@ -73,6 +73,7 @@ function App() {
   function handleCsvUpload() {
     setShowUpload(false); // inicia animação de saída do card
     setTimeout(() => {
+      setShowUpload(false);
       setCsvUploaded(true);
       setAnalyzing(true);
       setAnalysisStep(0);
@@ -152,41 +153,44 @@ function App() {
       </motion.header>
 
       {/* UPLOAD */}
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={showUpload ? { opacity: 1, y: 0 } : { opacity: 0, y: -40 }}
-        transition={{ duration: 0.6 }}
-        className="w-full max-w-xl mb-12"
-        style={{
-          pointerEvents: showUpload ? "auto" : "none",
-          display: showUpload ? "block" : "none"
-        }}>
-        <div className="relative bg-zinc-900/80 border border-zinc-800 rounded-2xl shadow-2xl shadow-black/30 px-10 py-12 flex flex-col items-center gap-6 overflow-hidden">
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-0 rounded-2xl border-2 border-transparent [box-shadow:0_0_32px_0_rgba(16,185,129,0.18)]"
-          />
-          <Upload className="w-12 h-12 text-emerald-400" />
-          <h2 className="text-2xl md:text-3xl font-bold text-zinc-100">
-            Importe seu extrato
-          </h2>
-          <p className="text-zinc-400 text-center max-w-md">
-            Faça upload do seu CSV para começar a entender seu dinheiro com IA.
-          </p>
-          <label className="cursor-pointer group">
-            <span className="flex items-center gap-2 px-7 py-3 rounded-xl bg-gradient-to-r from-emerald-400 to-cyan-400 text-zinc-900 font-semibold transition-all duration-200 group-hover:scale-105">
-              <FileText className="w-5 h-5" />
-              Selecionar CSV
-            </span>
-            <input
-              type="file"
-              accept=".csv"
-              className="hidden"
-              onChange={handleCsvUpload}
+      {showUpload && (
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={showUpload ? { opacity: 1, y: 0 } : { opacity: 0, y: -40 }}
+          transition={{ duration: 0.6 }}
+          className="w-full max-w-xl mb-12"
+          style={{
+            pointerEvents: showUpload ? "auto" : "none",
+            display: showUpload ? "block" : "none"
+          }}>
+          <div className="relative bg-zinc-900/80 border border-zinc-800 rounded-2xl shadow-2xl shadow-black/30 px-10 py-12 flex flex-col items-center gap-6 overflow-hidden">
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-0 rounded-2xl border-2 border-transparent [box-shadow:0_0_32px_0_rgba(16,185,129,0.18)]"
             />
-          </label>
-        </div>
-      </motion.div>
+            <Upload className="w-12 h-12 text-emerald-400" />
+            <h2 className="text-2xl md:text-3xl font-bold text-zinc-100">
+              Importe seu extrato
+            </h2>
+            <p className="text-zinc-400 text-center max-w-md">
+              Faça upload do seu CSV para começar a entender seu dinheiro com
+              IA.
+            </p>
+            <label className="cursor-pointer group">
+              <span className="flex items-center gap-2 px-7 py-3 rounded-xl bg-gradient-to-r from-emerald-400 to-cyan-400 text-zinc-900 font-semibold transition-all duration-200 group-hover:scale-105">
+                <FileText className="w-5 h-5" />
+                Selecionar CSV
+              </span>
+              <input
+                type="file"
+                accept=".csv"
+                className="hidden"
+                onChange={handleCsvUpload}
+              />
+            </label>
+          </div>
+        </motion.div>
+      )}
 
       {/* ANALYZING */}
       {analyzing && (
@@ -207,7 +211,6 @@ function App() {
           </span>
         </motion.div>
       )}
-
       {/* DASHBOARD */}
       {csvUploaded && !analyzing && (
         <>
