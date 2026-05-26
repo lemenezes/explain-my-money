@@ -104,39 +104,20 @@ function App() {
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0 flex items-center justify-center">
-          <div className="w-[480px] h-[320px] md:w-[700px] md:h-[400px] rounded-full blur-3xl opacity-60 bg-gradient-to-br from-emerald-400 via-cyan-400 to-transparent" />
+          <div className="w-[480px] h-[320px] md:w-[700px] md:h-[400px] rounded-full blur-3xl opacity-50 bg-gradient-to-br from-emerald-400 via-cyan-400 to-transparent" />
         </div>
 
         <div className="z-10 flex flex-col items-center">
-          <div className="mb-6">
-            <svg
-              width="56"
-              height="56"
-              viewBox="0 0 56 56"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg">
-              <circle cx="28" cy="28" r="28" fill="url(#logo-gradient)" />
-
-              <path
-                d="M18 34C18 27 28 22 28 22C28 22 38 27 38 34C38 38 33 40 28 40C23 40 18 38 18 34Z"
-                fill="#fff"
-                fillOpacity="0.95"
-              />
-
-              <defs>
-                <linearGradient
-                  id="logo-gradient"
-                  x1="0"
-                  y1="0"
-                  x2="56"
-                  y2="56"
-                  gradientUnits="userSpaceOnUse">
-                  <stop stopColor="#34d399" />
-                  <stop offset="1" stopColor="#06b6d4" />
-                </linearGradient>
-              </defs>
-            </svg>
-          </div>
+          <img
+            src="/logo/logo-symbol.png"
+            alt="Explain My Money"
+            className="
+            h-20
+            w-auto
+            mb-6
+            drop-shadow-[0_0_28px_rgba(16,185,129,0.18)]
+          "
+          />
 
           <span className="mb-5 px-3 py-1 rounded-full bg-zinc-900/80 border border-zinc-800 text-xs font-medium tracking-wide text-emerald-300 uppercase">
             AI Financial Companion
