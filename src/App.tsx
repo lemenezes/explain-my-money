@@ -53,14 +53,6 @@ function App() {
   const [analyzing, setAnalyzing] = useState(false);
   const [analysisStep, setAnalysisStep] = useState(0);
 
-  const analysisSteps = [
-    "Analyzing subscriptions...",
-    "Mapping spending behavior...",
-    "Detecting emotional spending...",
-    "Generating financial personality...",
-    "Building future projections..."
-  ];
-
   const analysisTimeout = useRef<number | null>(null);
 
   type Insight = {
@@ -75,7 +67,7 @@ function App() {
 
     let step = 0;
     function nextStep() {
-      if (step < analysisSteps.length - 1) {
+      if (step < translations[language].analysisSteps.length - 1) {
         step++;
         setAnalysisStep(step);
         analysisTimeout.current = window.setTimeout(nextStep, 1200);
@@ -187,7 +179,7 @@ function App() {
           </div>
 
           <span className="text-zinc-100 text-lg md:text-xl font-semibold mb-2 text-center">
-            {analysisSteps[analysisStep]}
+            {translations[language].analysisSteps[analysisStep]}
           </span>
 
           <span className="text-zinc-400 text-sm">
@@ -228,10 +220,6 @@ function App() {
                 </div>
               )
             )}
-            analysisSteps: [ "Analisando assinaturas...", "Mapeando
-            comportamento de gastos...", "Detectando gastos emocionais...",
-            "Gerando personalidade financeira...", "Projetando cenários
-            futuros..." ],
           </motion.section>
 
           {/* CARDS */}
@@ -257,10 +245,11 @@ function App() {
               <h3 className="text-lg font-semibold mb-4">
                 {translations[language].personalityTitle}
               </h3>
-              analysisSteps: [ "Analizando suscripciones...", "Mapeando
-              comportamiento de gastos...", "Detectando gastos emocionales...",
-              "Generando personalidad financiera...", "Proyectando escenarios
-              futuros..." ],
+              <ul className="text-zinc-400 text-sm space-y-2">
+                {translations[language].analysisSteps.map((step, idx) => (
+                  <li key={idx}>{step}</li>
+                ))}
+              </ul>
               <p className="text-zinc-400 text-sm">
                 {translations[language].personality}
               </p>
