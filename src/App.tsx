@@ -5,9 +5,25 @@ import { useEffect } from "react";
 import { Upload, Sparkles, User, BarChart2, Brain } from "lucide-react";
 import { motion } from "framer-motion";
 import { AreaChart, Area, XAxis, Tooltip, ResponsiveContainer } from "recharts";
+import { mockCategoryData } from "./mockCategoryData";
+import { mockFinancialData } from "./mockFinancialData";
+// Tooltip customizado para o gráfico
+// Função utilitária para formatar moeda conforme idioma
+function formatCurrency(value: number, currency: string) {
+  let locale = "en-US";
+  if (currency === "BRL") locale = "pt-BR";
+  if (currency === "EUR") locale = "es-ES";
+  return new Intl.NumberFormat(locale, {
+    style: "currency",
+    currency,
+    maximumFractionDigits: 0
+  }).format(value);
+}
+
 // Tooltip customizado para o gráfico
 function CustomTooltip({ active, payload, label }: any) {
   if (active && payload && payload.length) {
+    const currency = payload[0].payload.currency || "USD";
     return (
       <div
         style={{
@@ -22,20 +38,13 @@ function CustomTooltip({ active, payload, label }: any) {
         }}>
         <div style={{ fontWeight: 600, marginBottom: 4 }}>{label}</div>
         <div style={{ color: "#34d399", fontWeight: 500 }}>
-          Amount:{" "}
-          {payload[0].value.toLocaleString("en-US", {
-            style: "currency",
-            currency: "USD",
-            maximumFractionDigits: 0
-          })}
+          Amount: {formatCurrency(payload[0].value, currency)}
         </div>
       </div>
     );
   }
   return null;
 }
-
-import { mockCategoryData } from "./mockCategoryData";
 
 import "./index.css";
 
@@ -72,11 +81,15 @@ function App() {
   const [simResult, setSimResult] = useState("");
   function handleSimulate() {
     setShowSimulation(false);
-    // Exemplo de lógica mock: delivery reduzido 30%, economia em 5 anos
+    const amount = formatCurrency(18000, mockFinancialData.currency);
+    const result = translations[language].simulatorResult.replace(
+      "{amount}",
+      amount
+    );
     setTimeout(() => {
-      setSimResult(translations[language].simulatorResult);
+      setSimResult(result);
       setShowSimulation(true);
-    }, 350); // pequeno delay para animação
+    }, 350);
   }
   const [csvUploaded, setCsvUploaded] = useState(false);
   const [analyzing, setAnalyzing] = useState(false);
@@ -285,9 +298,27 @@ function App() {
                 {translations[language].summary}
               </h3>
               <ul className="text-zinc-400 text-sm space-y-2">
-                <li>{translations[language].monthly}</li>
-                <li>{translations[language].invested}</li>
-                <li>{translations[language].reserve}</li>
+                <li>
+                  {translations[language].monthly}:{" "}
+                  {formatCurrency(
+                    mockFinancialData.monthly,
+                    mockFinancialData.currency
+                  )}
+                </li>
+                <li>
+                  {translations[language].invested}:{" "}
+                  {formatCurrency(
+                    mockFinancialData.invested,
+                    mockFinancialData.currency
+                  )}
+                </li>
+                <li>
+                  {translations[language].reserve}:{" "}
+                  {formatCurrency(
+                    mockFinancialData.reserve,
+                    mockFinancialData.currency
+                  )}
+                </li>
               </ul>
             </div>
 

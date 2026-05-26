@@ -43,7 +43,7 @@ export const translations: Record<
     analyzeAnother: "Analyze another statement (CSV)",
     simulate: "Simulate future",
     simulatorResult:
-      "If you reduced delivery spending by 30%, you could save $18,000 in 5 years.",
+      "If you reduced delivery spending by 30%, you could save {amount} in 5 years.",
     insights: [
       {
         title: "You spend more on delivery than you invest.",
@@ -65,9 +65,9 @@ export const translations: Record<
       }
     ],
     summary: "Behavior summary",
-    monthly: "Monthly spending: $1,250",
-    invested: "Investments: $400",
-    reserve: "Current reserve: $2,800",
+    monthly: "Monthly spending",
+    invested: "Investments",
+    reserve: "Current reserve",
     personalityTitle: "AI Financial Personality",
     personality:
       "You are a cautious investor, but emotional in quick purchases.",
@@ -95,7 +95,7 @@ export const translations: Record<
     analyzeAnother: "Analisar outro extrato (CSV)",
     simulate: "Simular futuro",
     simulatorResult:
-      "Se você reduzir gastos com delivery em 30%, pode economizar R$ 18.000 em 5 anos.",
+      "Se você reduzir gastos com delivery em 30%, pode economizar {amount} em 5 anos.",
     insights: [
       {
         title: "Você gastou mais com delivery do que investiu.",
@@ -116,9 +116,9 @@ export const translations: Record<
       }
     ],
     summary: "Resumo do comportamento",
-    monthly: "Gastos mensais: R$ 1.250",
-    invested: "Investimentos: R$ 400",
-    reserve: "Reserva atual: R$ 2.800",
+    monthly: "Gastos mensais",
+    invested: "Investimentos",
+    reserve: "Reserva atual",
     personalityTitle: "Personalidade Financeira IA",
     personality:
       "Você é um investidor cauteloso, mas emocional em compras rápidas.",
@@ -145,7 +145,7 @@ export const translations: Record<
     analyzeAnother: "Analizar otro extracto (CSV)",
     simulate: "Simular futuro",
     simulatorResult:
-      "Si reduces el gasto en delivery un 30%, podrías ahorrar $18.000 en 5 años.",
+      "Si reduces el gasto en delivery un 30%, podrías ahorrar {amount} en 5 años.",
     insights: [
       {
         title: "Gastaste más en delivery que en inversiones.",
@@ -165,9 +165,9 @@ export const translations: Record<
       }
     ],
     summary: "Resumen de comportamiento",
-    monthly: "Gasto mensual: $1.250",
-    invested: "Inversiones: $400",
-    reserve: "Reserva actual: $2.800",
+    monthly: "Gasto mensual",
+    invested: "Inversiones",
+    reserve: "Reserva actual",
     personalityTitle: "Personalidad Financiera IA",
     personality:
       "Eres un inversor cauteloso, pero emocional en compras rápidas.",
