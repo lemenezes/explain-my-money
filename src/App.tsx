@@ -212,22 +212,31 @@ function App() {
           </motion.div>
           {/* INSIGHTS */}
           <motion.section
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial="hidden"
+            animate="visible"
+            variants={{
+              visible: { transition: { staggerChildren: 0.11 } },
+              hidden: {}
+            }}
             className="w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
-            {(translations[language].insights as Insight[]).map(
-              (insight, idx) => (
-                <div
-                  key={idx}
-                  className="bg-zinc-900/80 border border-zinc-800 rounded-2xl shadow-2xl shadow-black/30 p-6 flex flex-col gap-2 transition-all duration-300 hover:border-emerald-400/20 hover:-translate-y-1">
-                  <Sparkles className="w-6 h-6 text-zinc-400 mb-1" />
-                  <h3 className="text-lg font-semibold text-zinc-100">
-                    {insight.title}
-                  </h3>
-                  <p className="text-zinc-400 text-sm">{insight.description}</p>
-                </div>
-              )
-            )}
+            {(translations[language].insights as Insight[]).map((insight, idx) => (
+              <motion.div
+                key={idx}
+                variants={{
+                  hidden: { opacity: 0, y: 24 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.38, ease: [0.4, 0.12, 0.22, 1] } }
+                }}
+                initial="hidden"
+                animate="visible"
+                className="bg-zinc-900/80 border border-zinc-800 rounded-2xl shadow-2xl shadow-black/30 p-6 flex flex-col gap-2 transition-all duration-300 hover:border-emerald-400/20 hover:-translate-y-1"
+              >
+                <Sparkles className="w-6 h-6 text-zinc-400 mb-1" />
+                <h3 className="text-lg font-semibold text-zinc-100">
+                  {insight.title}
+                </h3>
+                <p className="text-zinc-400 text-sm">{insight.description}</p>
+              </motion.div>
+            ))}
           </motion.section>
 
           {/* CARDS */}
