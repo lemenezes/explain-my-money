@@ -29,13 +29,13 @@ function App() {
       localStorage.setItem("language", language);
     }
   }, [language]);
-  const [showUpload, setShowUpload] = useState(true);
+  // O upload deve aparecer quando !csvUploaded && !analyzing
+  // Não precisamos mais de showUpload para controlar visibilidade
   // Reset premium
   function handleResetAnalysis() {
     setCsvUploaded(false);
     setAnalyzing(false);
     setAnalysisStep(0);
-    setShowUpload(true);
     setShowSimulation(false);
   }
   // Estado para simulação do cenário
@@ -45,9 +45,7 @@ function App() {
     setShowSimulation(false);
     // Exemplo de lógica mock: delivery reduzido 30%, economia em 5 anos
     setTimeout(() => {
-      setSimResult(
-        "Se você reduzir gastos com delivery em 30%, pode economizar R$ 18.000 em 5 anos."
-      );
+      setSimResult(translations[language].simulatorResult);
       setShowSimulation(true);
     }, 350); // pequeno delay para animação
   }
@@ -71,27 +69,23 @@ function App() {
   };
 
   function handleCsvUpload() {
-    setShowUpload(false); // inicia animação de saída do card
-    setTimeout(() => {
-      setShowUpload(false);
-      setCsvUploaded(true);
-      setAnalyzing(true);
-      setAnalysisStep(0);
+    setCsvUploaded(true);
+    setAnalyzing(true);
+    setAnalysisStep(0);
 
-      let step = 0;
-      function nextStep() {
-        if (step < analysisSteps.length - 1) {
-          step++;
-          setAnalysisStep(step);
-          analysisTimeout.current = window.setTimeout(nextStep, 1200);
-        } else {
-          window.setTimeout(() => {
-            setAnalyzing(false);
-          }, 1200);
-        }
+    let step = 0;
+    function nextStep() {
+      if (step < analysisSteps.length - 1) {
+        step++;
+        setAnalysisStep(step);
+        analysisTimeout.current = window.setTimeout(nextStep, 1200);
+      } else {
+        window.setTimeout(() => {
+          setAnalyzing(false);
+        }, 1200);
       }
-      analysisTimeout.current = window.setTimeout(nextStep, 1200);
-    }, 500); // delay para animação do card sumir
+    }
+    analysisTimeout.current = window.setTimeout(nextStep, 1200);
   }
 
   return (
@@ -148,16 +142,12 @@ function App() {
       </motion.header>
 
       {/* UPLOAD */}
-      {showUpload && (
+      {!csvUploaded && !analyzing && (
         <motion.div
           initial={{ opacity: 0, y: 30 }}
-          animate={showUpload ? { opacity: 1, y: 0 } : { opacity: 0, y: -40 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="w-full max-w-xl mb-12"
-          style={{
-            pointerEvents: showUpload ? "auto" : "none",
-            display: showUpload ? "block" : "none"
-          }}>
+          className="w-full max-w-xl mb-12">
           <div className="relative bg-zinc-900/80 border border-zinc-800 rounded-2xl shadow-2xl shadow-black/30 px-10 py-12 flex flex-col items-center gap-6 overflow-hidden">
             <div
               aria-hidden
@@ -171,6 +161,10 @@ function App() {
               {translations[language].uploadDesc}
             </p>
             <label className="cursor-pointer group">
+              <span className="flex items-center gap-2 px-7 py-3 rounded-xl bg-gradient-to-r from-emerald-400 to-cyan-400 text-zinc-900 font-semibold transition-all duration-200 group-hover:scale-105">
+                <Upload className="w-5 h-5" />
+                {translations[language].uploadBtn}
+              </span>
               <input
                 type="file"
                 accept=".csv"
@@ -291,7 +285,7 @@ function App() {
                 className="mt-6">
                 {showSimulation && (
                   <div className="bg-gradient-to-r from-emerald-900/30 to-cyan-900/20 border border-emerald-700/30 rounded-xl px-5 py-4 text-emerald-200 shadow-lg shadow-emerald-400/10 text-base font-medium max-w-xs">
-                    {translations[language].simulatorResult}
+                    {simResult}
                   </div>
                 )}
               </motion.div>
