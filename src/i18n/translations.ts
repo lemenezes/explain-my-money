@@ -28,6 +28,7 @@ export const translations: Record<
     scenario: string;
     chart: string;
     analysisSteps: string[];
+    stepLabel: string;
   }
 > = {
   en: {
@@ -77,7 +78,8 @@ export const translations: Record<
       "Detecting emotional spending...",
       "Generating financial personality...",
       "Building future projections..."
-    ]
+    ],
+    stepLabel: "Step {current} of {total}"
   },
   pt: {
     heroBadge: "Companheiro Financeiro IA",
@@ -126,7 +128,8 @@ export const translations: Record<
       "Detectando gastos emocionais...",
       "Gerando personalidade financeira...",
       "Projetando cenários futuros..."
-    ]
+    ],
+    stepLabel: "Etapa {current} de {total}"
   },
   es: {
     heroBadge: "Compañero Financiero IA",
@@ -173,6 +176,7 @@ export const translations: Record<
       "Detectando gastos emocionales...",
       "Generando personalidad financiera...",
       "Proyectando escenarios futuros..."
-    ]
+    ],
+    stepLabel: "Paso {current} de {total}"
   }
 };
