@@ -177,11 +177,45 @@ function App() {
           <div className="mb-6 animate-pulse">
             <Brain className="w-14 h-14 text-emerald-400" />
           </div>
-
           <span className="text-zinc-100 text-lg md:text-xl font-semibold mb-2 text-center">
             {translations[language].analysisSteps[analysisStep]}
           </span>
-
+          <span className="text-zinc-400 text-xs mb-1">
+            {translations[language].stepLabel
+              ? translations[language].stepLabel
+                  .replace("{current}", String(analysisStep + 1))
+                  .replace(
+                    "{total}",
+                    String(translations[language].analysisSteps.length)
+                  )
+              : `Step ${analysisStep + 1} of ${translations[language].analysisSteps.length}`}
+          </span>
+          <span className="text-zinc-400 text-sm">
+            {translations[language].analyzing}
+          </span>
+        </motion.div>
+      )}
+      {analyzing && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="w-full max-w-xl flex flex-col items-center justify-center py-24 mb-10 relative">
+          <div className="mb-6 animate-pulse">
+            <Brain className="w-14 h-14 text-emerald-400" />
+          </div>
+          <span className="text-zinc-100 text-lg md:text-xl font-semibold mb-2 text-center">
+            {translations[language].analysisSteps[analysisStep]}
+          </span>
+          <span className="text-zinc-400 text-xs mb-1">
+            {translations[language].stepLabel
+              ? translations[language].stepLabel
+                  .replace("{current}", String(analysisStep + 1))
+                  .replace(
+                    "{total}",
+                    String(translations[language].analysisSteps.length)
+                  )
+              : `Step ${analysisStep + 1} of ${translations[language].analysisSteps.length}`}
+          </span>
           <span className="text-zinc-400 text-sm">
             {translations[language].analyzing}
           </span>
