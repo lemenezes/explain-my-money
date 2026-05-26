@@ -173,33 +173,7 @@ function App() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="w-full max-w-xl flex flex-col items-center justify-center py-24 mb-10 relative">
-          <div className="mb-6 animate-pulse">
-            <Brain className="w-14 h-14 text-emerald-400" />
-          </div>
-          <span className="text-zinc-100 text-lg md:text-xl font-semibold mb-2 text-center">
-            {translations[language].analysisSteps[analysisStep]}
-          </span>
-          <span className="text-zinc-400 text-xs mb-1">
-            {translations[language].stepLabel
-              ? translations[language].stepLabel
-                  .replace("{current}", String(analysisStep + 1))
-                  .replace(
-                    "{total}",
-                    String(translations[language].analysisSteps.length)
-                  )
-              : `Step ${analysisStep + 1} of ${translations[language].analysisSteps.length}`}
-          </span>
-          <span className="text-zinc-400 text-sm">
-            {translations[language].analyzing}
-          </span>
-        </motion.div>
-      )}
-      {analyzing && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="w-full max-w-xl flex flex-col items-center justify-center py-24 mb-10 relative">
+          className="w-full max-w-xl flex flex-col items-center justify-center pt-6 mb-10 relative -translate-y-10">
           <div className="mb-6 animate-pulse">
             <Brain className="w-14 h-14 text-emerald-400" />
           </div>
@@ -279,14 +253,12 @@ function App() {
               <h3 className="text-lg font-semibold mb-4">
                 {translations[language].personalityTitle}
               </h3>
-              <ul className="text-zinc-400 text-sm space-y-2">
-                {translations[language].analysisSteps.map((step, idx) => (
-                  <li key={idx}>{step}</li>
-                ))}
-              </ul>
-              <p className="text-zinc-400 text-sm">
+              <p className="text-zinc-400 text-base mb-4">
                 {translations[language].personality}
               </p>
+              <div className="mt-2 inline-block px-4 py-1 rounded-full bg-gradient-to-r from-emerald-700/30 to-cyan-700/20 text-emerald-200 text-xs font-semibold tracking-wide uppercase shadow shadow-emerald-400/10">
+                {translations[language].personalityTag}
+              </div>
             </div>
 
             <div className="bg-zinc-900/80 border border-zinc-800 rounded-2xl p-6">

@@ -25,6 +25,7 @@ export const translations: Record<
     reserve: string;
     personalityTitle: string;
     personality: string;
+    personalityTag: string;
     scenario: string;
     chart: string;
     analysisSteps: string[];
@@ -70,6 +71,7 @@ export const translations: Record<
     personalityTitle: "AI Financial Personality",
     personality:
       "You are a cautious investor, but emotional in quick purchases.",
+    personalityTag: "Cautious Investor",
     scenario: "Scenario Simulator",
     chart: "Spending by category",
     analysisSteps: [
@@ -82,7 +84,7 @@ export const translations: Record<
     stepLabel: "Step {current} of {total}"
   },
   pt: {
-    heroBadge: "Companheiro Financeiro IA",
+    heroBadge: "ASSISTENTE FINANCEIRO IA",
     heroTitle: "Explain My Money",
     heroSubtitle: "Transforme caos financeiro em clareza humana.",
     uploadTitle: "Importe seu extrato",
@@ -120,6 +122,7 @@ export const translations: Record<
     personalityTitle: "Personalidade Financeira IA",
     personality:
       "Você é um investidor cauteloso, mas emocional em compras rápidas.",
+    personalityTag: "Investidor Cauteloso",
     scenario: "Simulador de Cenários",
     chart: "Gastos por categoria",
     analysisSteps: [
@@ -132,7 +135,7 @@ export const translations: Record<
     stepLabel: "Etapa {current} de {total}"
   },
   es: {
-    heroBadge: "Compañero Financiero IA",
+    heroBadge: "ASISTENTE FINANCIERO IA",
     heroTitle: "Explain My Money",
     heroSubtitle: "Convierte el caos financiero en claridad humana.",
     uploadTitle: "Importa tu extracto",
@@ -168,6 +171,7 @@ export const translations: Record<
     personalityTitle: "Personalidad Financiera IA",
     personality:
       "Eres un inversor cauteloso, pero emocional en compras rápidas.",
+    personalityTag: "Inversor Cauteloso",
     scenario: "Simulador de Escenarios",
     chart: "Gasto por categoría",
     analysisSteps: [
